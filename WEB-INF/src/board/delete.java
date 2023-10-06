@@ -1,3 +1,5 @@
+// 23.09.27(수) JSP/Servlet
+
 package board;
 
 import java.sql.*;

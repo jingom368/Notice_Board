@@ -1,6 +1,6 @@
-// 23.09.25(월) JSP/Servlet
+// 23.10.05(목) JSP/Servlet
 
-package com.test.board;
+package servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.sql.*;
 
 
-@WebServlet("/board/write")
-public class write extends HttpServlet {
+@WebServlet("/servlet/jdbctest_registry")
+public class MemberRegistry extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -28,13 +28,13 @@ public class write extends HttpServlet {
         Connection con = null;
         Statement stmt = null;
 
-        String writer = request.getParameter("writer");
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
+        String name = request.getParameter("rname");
+        String gender = request.getParameter("gender");
+        String age = request.getParameter("age");
 
-        String query = "insert into tbl_board (seqno, userid, writer, title, content, regdate) values " 
-                    + "(tbl_board_seq.nextval, 'jinung','" + writer + "','" + title + "','"  + content + "',sysdate)";
-        System.out.println("게시물 등록 SQL : " + query); 
+        String query = "insert into tbl_test (id, name, gender, age) values " 
+                    + "(tbl_test_seq.nextval, '" + name + "','" + gender + "',"  + age + ")";
+        System.out.println("멤버 등록 SQL : " + query); 
 
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -45,7 +45,7 @@ public class write extends HttpServlet {
             if(stmt != null) stmt.close();
             if(con != null) con.close();
 
-            response.sendRedirect("/board/list.jsp");
+            response.sendRedirect("/jsp/jdbctest_oracle.jsp"); // Redirect 함으로써 값을 response의 값을 받아옴
 
         } catch(Exception e) {
             e.printStackTrace();

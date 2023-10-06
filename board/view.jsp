@@ -1,3 +1,5 @@
+<%-- 23.09.26(화) JSP --%>
+
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.sql.*" %>
 

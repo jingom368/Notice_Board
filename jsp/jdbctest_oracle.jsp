@@ -1,3 +1,5 @@
+<%-- 23.09.25(월) JSP --%>
+
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.sql.*" %>
 
@@ -17,6 +19,9 @@
 <head>
     <title>JDBC 연동 JSP 예제</title>
     <style>
+        .main {
+            text-align: center;
+        }
         .InfoTable {
             border-collapse: collapse;
             border: 3px solid #168;
@@ -42,51 +47,76 @@
             text-align: center;
         }
 
+        .bottom_menu {
+            margin-top : 20px;
+        }
+        .bottom_menu > a:link, .bottom_menu > a:visited {
+            background-color: #ffa500;
+            color: maroon;
+            padding: 15px 25px;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .bottom_menu > a:hover, .bottom_menu > a:active {
+            background-color: #1E90FF;
+            text-decoration : none;
+        }
         
     </style>
+
 </head>
 
 <body>
-    <h1>JDBC 연동 JSP 예제 - DBMS : Oracle</h1>
-    <table class="InfoTable">
-        <tr>
-            <th>번호</th>
-            <th>이름</th>
-            <th>성별</th>
-            <th>나이</th>
-        </tr>
+    <div class="main">
+        <h1>JDBC 연동 JSP 예제 - DBMS : Oracle</h1>
+        <table class="InfoTable">
+            <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>성별</th>
+                <th>나이</th>
+            </tr>
 
-        <%
-            try {
-            Class.forName("oracle.jdbc.driver.OracleDriver"); // Oracle JDBC 드라이버를 로딩
-            con = DriverManager.getConnection(uri, userid, userpw); // uri, userid, userpw 값으로 DB 연결 시도
-            stmt = con.createStatement(); // SQL이 실행될 수 있는 환경 생성 
-            rs = stmt.executeQuery(query); // SQL문을 실행해서 그 결과를 ResultSet이란 Collection 객체에 받는다.
-            
-            while(rs.next()) {
+            <%
+                try {
+                Class.forName("oracle.jdbc.driver.OracleDriver"); // Oracle JDBC 드라이버를 로딩
+                con = DriverManager.getConnection(uri, userid, userpw); // uri, userid, userpw 값으로 DB 연결 시도
+                stmt = con.createStatement(); // SQL이 실행될 수 있는 환경 생성 
+                rs = stmt.executeQuery(query); // SQL문을 실행해서 그 결과를 ResultSet이란 Collection 객체에 받는다.
+                
+                while(rs.next()) {
 
-        %>
+            %>
 
-        <tr>
-            <td><%=rs.getInt("id") %></td>
-            <td><%=rs.getString("name") %></td>
-            <td><%=rs.getString("gender") %></td>
-            <td><%=rs.getInt("age") %></td>
-        </tr>
+            <tr>
+                <td><%=rs.getInt("id") %></td>
+                <td><%=rs.getString("name") %></td>
+                <td><%=rs.getString("gender") %></td>
+                <td><%=rs.getInt("age") %></td>
+            </tr>
 
-        <%
-                }
+            <%
+                    }
 
-                if(rs != null) rs.close();
-                if(stmt != null) stmt.close();
-                if(con != null) con.close();  
+                    if(rs != null) rs.close();
+                    if(stmt != null) stmt.close();
+                    if(con != null) con.close();  
 
-            } catch(Exception e) {
-                e.printStackTrace();
-            }       
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }       
 
-        %>
+            %>
 
-    </table>
+        </table>
+
+        <br>
+        <div class="bottom_menu">
+            <a href="/jsp/jdbctest_registry.jsp">멤버 등록</a>
+        </div>
+        <br><br>
+
+    </div>
 </body>
 </html>
